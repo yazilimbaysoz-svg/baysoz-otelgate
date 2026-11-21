@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "baysoz-otelgate"
+version = "0.1.0"
+description = "Static policy gate and semantic linter for OpenTelemetry Collector configurations by Baysöz Labs."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Baysöz Labs", email = "baysozlabs@proton.me" }
+]
+maintainers = [
+  { name = "Baysöz Labs", email = "baysozlabs@proton.me" }
+]
+keywords = ["opentelemetry", "otel", "observability", "linter", "security", "sarif", "ci"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: System :: Monitoring",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+  "PyYAML>=6.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+  "ruff>=0.11.0",
+]
+
+[project.scripts]
+otelgate = "baysoz_otelgate.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/yazilimbaysoz-svg/baysoz-otelgate"
+Repository = "https://github.com/yazilimbaysoz-svg/baysoz-otelgate"
+Issues = "https://github.com/yazilimbaysoz-svg/baysoz-otelgate/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/baysoz_otelgate"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "S", "B"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]

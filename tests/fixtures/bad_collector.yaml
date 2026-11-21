@@ -1,0 +1,26 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+processors:
+  batch:
+    send_batch_size: 1000
+  memory_limiter:
+    limit_mib: 256
+
+exporters:
+  otlp:
+    endpoint: collector.example.com:4317
+    tls:
+      insecure: true
+    headers:
+      api_key: "sk-live-secret-token"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp, missing_receiver]
+      processors: [batch, memory_limiter]
+      exporters: [otlp, missing_exporter]
